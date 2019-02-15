@@ -275,6 +275,8 @@ module.exports = function(webpackEnv) {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
+        moment: paths.resolveApp('node_modules/moment'),
+        yup: paths.resolveApp('node_modules/yup'),
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
@@ -344,7 +346,7 @@ module.exports = function(webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: paths.appSrc,
+              include: [paths.appSrc, paths.reaCoreSrc],
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
@@ -372,6 +374,8 @@ module.exports = function(webpackEnv) {
                 ),
                 // @remove-on-eject-end
                 plugins: [
+                  paths.resolveApp('node_modules/babel-plugin-relay'),
+                  paths.resolveApp('node_modules/babel-plugin-emotion'),
                   [
                     require.resolve('babel-plugin-named-asset-import'),
                     {
